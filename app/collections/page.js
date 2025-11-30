@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Filter } from 'lucide-react';
@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import ProductCard from '@/components/ProductCard';
 import { getProducts, getCategories, getProductsByCategory } from '@/lib/sanity.queries';
 
-export default function CollectionsPage() {
+function CollectionsContent() {
   const searchParams = useSearchParams();
   const categoryFilter = searchParams.get('category');
   
@@ -150,5 +150,21 @@ export default function CollectionsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CollectionsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen py-12 px-4 mt-5">
+          <div className="max-w-7xl mx-auto">
+            <p className="text-gray-600 text-lg">Loading collections...</p>
+          </div>
+        </div>
+      }
+    >
+      <CollectionsContent />
+    </Suspense>
   );
 }
