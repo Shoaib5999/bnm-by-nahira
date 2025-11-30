@@ -5,9 +5,9 @@ import {schemaTypes} from './schemas'
 
 export default defineConfig({
   name: 'default',
-  title: 'Blooms & Gifts CMS',
+  title: 'bm-by-nahira',
 
-  projectId: 'YOUR_PROJECT_ID', // Replace with your Sanity project ID
+  projectId: 'qwsy32e7', // Replace with your Sanity project ID
   dataset: 'production',
 
   plugins: [deskTool(), visionTool()],
