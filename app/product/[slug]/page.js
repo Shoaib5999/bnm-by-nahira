@@ -105,10 +105,10 @@ export default function ProductPage() {
     : [product.mainImage];
 
   return (
-    <div className="min-h-screen py-12 px-4">
+    <div className="min-h-screen py-12 px-4 mt-7">
       <div className="max-w-7xl mx-auto">
         {/* Back Button */}
-        <Link href="/collections" className="inline-flex items-center text-rose-600 hover:text-rose-700 mb-8">
+        <Link href="/collections" className="inline-flex items-center text-rose-600 hover:text-rose-700 mb-8 cursor-pointer">
           <ChevronLeft className="w-5 h-5" />
           <span className="ml-1">Back to Collections</span>
         </Link>

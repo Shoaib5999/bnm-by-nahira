@@ -244,7 +244,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg rounded-full">
+              <Button size="lg" variant="outline" className="border-2 border-white text--rose-600 bg-white/10 px-8 py-6 text-lg rounded-full">
                 WhatsApp Us
               </Button>
             </a>

@@ -22,6 +22,7 @@ export default function CollectionsPage() {
     async function fetchData() {
       try {
         const cats = await getCategories();
+        console.log("categories", cats);
         setCategories(cats || []);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -58,7 +59,7 @@ export default function CollectionsPage() {
   }, [categoryFilter]);
 
   return (
-    <div className="min-h-screen py-12 px-4">
+    <div className="min-h-screen py-12 px-4 mt-5">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">

@@ -49,17 +49,17 @@ Replace `YOUR_PROJECT_ID` with your actual Sanity Project ID in these files:
 
 **File 1: `/app/sanity/sanity.config.js`**
 ```javascript
-projectId: 'abc123def', // Replace with your actual project ID
+projectId: 'qwsy32e7', // Replace with your actual project ID
 ```
 
 **File 2: `/app/sanity/sanity.cli.js`**
 ```javascript
-projectId: 'abc123def', // Replace with your actual project ID
+projectId: 'qwsy32e7', // Replace with your actual project ID
 ```
 
 **File 3: `/app/.env.local`**
 ```env
-NEXT_PUBLIC_SANITY_PROJECT_ID=abc123def
+NEXT_PUBLIC_SANITY_PROJECT_ID=qwsy32e7
 ```
 
 ### 5. Initialize and Deploy Sanity Studio
