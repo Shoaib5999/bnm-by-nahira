@@ -44,7 +44,8 @@ export default function ProductPage() {
   }, [params.slug]);
 
   const handleWhatsAppInquiry = () => {
-    const message = `Hi! I'm interested in: ${product?.title}`;
+    const message = `Hi! I'm interested in: ${product?.title} 
+    Product link : ${window.location.href}`;
     const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '');
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
@@ -173,7 +174,7 @@ export default function ProductPage() {
               </h1>
 
               <div className="flex items-baseline gap-4 mb-6">
-                <span className="text-3xl font-bold text-rose-600">${product.price}</span>
+                <span className="text-3xl font-bold text-rose-600">₹{product.price}</span>
                 {product.inStock ? (
                   <span className="text-green-600 text-sm font-medium">In Stock</span>
                 ) : (

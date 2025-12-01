@@ -36,19 +36,19 @@ export default function Home() {
 
   const testimonials = [
     {
-      name: 'Sarah Johnson',
+      name: 'Zuhaib Khan',
       text: 'Absolutely stunning bouquet! The flowers were fresh and the arrangement was breathtaking.',
       rating: 5
     },
     {
-      name: 'Michael Chen',
+      name: 'Sana Jameel',
       text: 'The custom cake exceeded all expectations. Perfect for our anniversary celebration!',
       rating: 5
     },
     {
-      name: 'Emily Davis',
+      name: 'Kaustub Singh',
       text: 'Beautiful personalized gift hamper. The attention to detail is incredible!',
-      rating: 5
+      rating: 4.2
     }
   ];
 

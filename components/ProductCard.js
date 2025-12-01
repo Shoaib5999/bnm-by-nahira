@@ -24,11 +24,11 @@ export default function ProductCard({ product }) {
               <span className="text-gray-400 text-lg">No Image</span>
             </div>
           )}
-          {!product.inStock && (
+          {/* {!product.inStock && (
             <div className="absolute top-4 right-4 bg-gray-900 text-white px-3 py-1 rounded-full text-sm font-medium">
               Out of Stock
             </div>
-          )}
+          )} */}
           {product.featured && (
             <div className="absolute top-4 left-4 bg-rose-500 text-white px-3 py-1 rounded-full text-sm font-medium">
               Featured
@@ -54,7 +54,7 @@ export default function ProductCard({ product }) {
             {product.description}
           </p>
           <div className="flex items-center justify-between">
-            <span className="text-2xl font-bold text-rose-600">${product.price}</span>
+            <span className="text-2xl font-bold text-rose-600">₹{product.price}</span>
             <span className="text-sm text-gray-500">Click to view</span>
           </div>
         </div>

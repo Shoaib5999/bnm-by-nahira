@@ -31,7 +31,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen mt-5">
       {/* Hero Section */}
       <section className="relative py-20 px-4 bg-gradient-to-br from-rose-100 via-pink-50 to-emerald-50">
         <div className="max-w-4xl mx-auto text-center">

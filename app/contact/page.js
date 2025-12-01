@@ -84,7 +84,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen py-12 px-4 mt-5">
+    <div className="min-h-screen py-12 px-4 mt-10">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
