@@ -16,6 +16,14 @@ export default function Home() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const isWhatsappAvailable =
+    process.env.NEXT_PUBLIC_WHATSAPP_AVAILABLE === 'true' &&
+    !!process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+
+  const isInstagramAvailable =
+    process.env.NEXT_PUBLIC_INSTAGRAM_AVAILABLE === 'true' &&
+    !!process.env.NEXT_PUBLIC_INSTAGRAM_URL;
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -53,35 +61,31 @@ export default function Home() {
   ];
 
   return (
-    <div className="w-full">
-      {/* Hero Section */}
-      <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-rose-100 via-pink-50 to-emerald-50" />
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-64 h-64 bg-rose-300 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-300 rounded-full blur-3xl" />
-        </div>
-        
-        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full mb-6 shadow-sm">
-              <Sparkles className="w-4 h-4 text-rose-500" />
-              <span className="text-sm font-medium text-gray-700">Handcrafted with Love</span>
-            </div>
-            
-            <h1 className="font-playfair text-6xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-6">
-              {process.env.NEXT_PUBLIC_BUSINESS_NAME || 'Blooms & Gifts'}
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              {process.env.NEXT_PUBLIC_BUSINESS_TAGLINE || 'Handcrafted Bouquets & Personalized Gifts'}
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      <div className="w-full">
+        {/* Hero Section */}
+        <section className="relative w-full mt-5  md:h-[110vh] overflow-hidden bg-[#f5c9d9] h-[90vh]">
+{/* Background Image */}
+<div className="absolute inset-0 md:h-[70vh] md:top-[15%] h-[90vh] mt-5">
+<Image
+  src="https://res.cloudinary.com/dei1kplrb/image/upload/v1764773909/file_00000000e8f47206a2c452c18c4b1198_pltl29.png"
+  alt="Bare Minimum by Nahira"
+  fill
+  priority
+  className="
+      /* DESKTOP */
+    object-contain
+    !scale-[1.5]
+    lg:scale-1
+    !left-8 lg:!top-5
+     lg:object-contain
+    lg:!left-10 
+    lg:!h-full lg:!w-full lg:text-inherit
+  "
+/>
+
+{/* <div className="absolute inset-0 bg-pink-200/20" /> */}
+</div>
+{/* <div className="absolute inset-x-0 top-[100%] md:top-[100%] bottom-0 lg:top-40 z-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/collections">
                 <Button size="lg" className="bg-rose-500 hover:bg-rose-600 text-white px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all">
                   View Collections
@@ -93,12 +97,23 @@ export default function Home() {
                   Get in Touch
                 </Button>
               </Link>
-            </div>
-          </motion.div>
-        </div>
+            </div> */}
 
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
-      </section>
+
+{/* Content */}
+{/* <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+<h1 className="text-4xl md:text-6xl font-bold tracking-wide text-gray-800 drop-shadow-lg">
+Bare Minimum
+</h1>
+<p className="mt-2 text-lg md:text-2xl text-gray-700 font-light">
+by Nahira
+</p>
+<p className="mt-6 max-w-2xl text-gray-700 text-sm md:text-lg">
+You buy for love, we make with love.
+</p>
+<p className="text-gray-700 text-sm md:text-lg mt-1">We provide everything handmade!</p>
+</div> */}
+</section>
 
       {/* Categories Section */}
       <section className="py-20 px-4">
@@ -239,15 +254,32 @@ export default function Home() {
                 Shop Now
               </Button>
             </Link>
-            <a 
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button size="lg" variant="outline" className="border-2 border-white text--rose-600 bg-white/10 px-8 py-6 text-lg rounded-full">
-                WhatsApp Us
-              </Button>
-            </a>
+            {isWhatsappAvailable && (
+              <a 
+                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button size="lg" variant="outline" className="border-2 border-white text--rose-600 bg-white/10 px-8 py-6 text-lg rounded-full">
+                  WhatsApp Us
+                </Button>
+              </a>
+            )}
+            {isInstagramAvailable && (
+              <a
+                href={process.env.NEXT_PUBLIC_INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-2 border-white text-white bg-white/10 px-8 py-6 text-lg rounded-full"
+                >
+                  DM on Instagram
+                </Button>
+              </a>
+            )}
           </div>
         </div>
       </section>

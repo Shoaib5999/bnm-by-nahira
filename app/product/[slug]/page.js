@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { MessageCircle, Share2, Heart, ChevronLeft } from 'lucide-react';
+import { MessageCircle, Share2, Heart, ChevronLeft, Instagram } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import ProductCard from '@/components/ProductCard';
@@ -19,6 +19,14 @@ export default function ProductPage() {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
+
+  const isWhatsappAvailable =
+    process.env.NEXT_PUBLIC_WHATSAPP_AVAILABLE === 'true' &&
+    !!process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+
+  const isInstagramAvailable =
+    process.env.NEXT_PUBLIC_INSTAGRAM_AVAILABLE === 'true' &&
+    !!process.env.NEXT_PUBLIC_INSTAGRAM_URL;
 
   useEffect(() => {
     async function fetchProduct() {
@@ -44,11 +52,21 @@ export default function ProductPage() {
   }, [params.slug]);
 
   const handleWhatsAppInquiry = () => {
+    if (!isWhatsappAvailable) return;
+
     const message = `Hi! I'm interested in: ${product?.title} 
     Product link : ${window.location.href}`;
     const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '');
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
+  };
+
+  const handleInstagramInquiry = () => {
+    if (!isInstagramAvailable) return;
+    const instagramUrl = process.env.NEXT_PUBLIC_INSTAGRAM_URL;
+    if (instagramUrl) {
+      window.open(instagramUrl, '_blank');
+    }
   };
 
   const handleShare = async () => {
@@ -186,15 +204,27 @@ export default function ProductPage() {
                 <p className="text-gray-700 text-lg leading-relaxed">{product.description}</p>
               </div>
 
-              <div className="flex gap-4 mb-8">
-                <Button
-                  onClick={handleWhatsAppInquiry}
-                  size="lg"
-                  className="flex-1 bg-green-500 hover:bg-green-600 text-white py-6 text-lg rounded-full"
-                >
-                  <MessageCircle className="mr-2 w-5 h-5" />
-                  Inquire on WhatsApp
-                </Button>
+              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                {isWhatsappAvailable && (
+                  <Button
+                    onClick={handleWhatsAppInquiry}
+                    size="lg"
+                    className="flex-1 bg-green-500 hover:bg-green-600 text-white py-6 text-lg rounded-full"
+                  >
+                    <MessageCircle className="mr-2 w-5 h-5" />
+                    Inquire on WhatsApp
+                  </Button>
+                )}
+                {isInstagramAvailable && (
+                  <Button
+                    onClick={handleInstagramInquiry}
+                    size="lg"
+                    className="flex-1 bg-pink-500 hover:bg-pink-600 text-white py-6 text-lg rounded-full"
+                  >
+                    <Instagram className="mr-2 w-5 h-5" />
+                    Inquire on Instagram
+                  </Button>
+                )}
                 <Button
                   onClick={handleShare}
                   size="lg"
@@ -205,21 +235,40 @@ export default function ProductPage() {
                 </Button>
               </div>
 
-              <Card className="bg-gradient-to-br from-rose-50 to-pink-50 p-6 rounded-2xl border-0">
-                <h3 className="font-semibold text-gray-900 mb-2">Need something special?</h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  We offer custom designs and personalization for all our products. Contact us to discuss your vision!
-                </p>
-                <a
-                  href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button variant="outline" className="w-full">
-                    Contact for Custom Orders
-                  </Button>
-                </a>
-              </Card>
+              {(isWhatsappAvailable || isInstagramAvailable) && (
+                <Card className="bg-gradient-to-br from-rose-50 to-pink-50 p-6 rounded-2xl border-0">
+                  <h3 className="font-semibold text-gray-900 mb-2">Need something special?</h3>
+                  <p className="text-gray-600 text-sm mb-4">
+                    We offer custom designs and personalization for all our products. Contact us to discuss your vision!
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    {isWhatsappAvailable && (
+                      <a
+                        href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full"
+                      >
+                        <Button variant="outline" className="w-full">
+                          WhatsApp for Custom Orders
+                        </Button>
+                      </a>
+                    )}
+                    {isInstagramAvailable && (
+                      <a
+                        href={process.env.NEXT_PUBLIC_INSTAGRAM_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full"
+                      >
+                        <Button variant="outline" className="w-full">
+                          Instagram DM for Custom Orders
+                        </Button>
+                      </a>
+                    )}
+                  </div>
+                </Card>
+              )}
             </motion.div>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, MessageCircle, Instagram } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -17,6 +17,21 @@ export default function ContactPage() {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const isWhatsappAvailable =
+    process.env.NEXT_PUBLIC_WHATSAPP_AVAILABLE === 'true' &&
+    !!process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+
+  const isInstagramAvailable =
+    process.env.NEXT_PUBLIC_INSTAGRAM_AVAILABLE === 'true' &&
+    !!process.env.NEXT_PUBLIC_INSTAGRAM_URL;
+
+  const getAltChannelSuffix = () => {
+    if (isWhatsappAvailable && isInstagramAvailable) return 'via WhatsApp or Instagram.';
+    if (isWhatsappAvailable) return 'via WhatsApp.';
+    if (isInstagramAvailable) return 'via Instagram.';
+    return 'via phone or email.';
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,11 +60,15 @@ export default function ContactPage() {
         toast.success('Message sent successfully! We\'ll get back to you soon.');
         setFormData({ name: '', email: '', phone: '', message: '' });
       } else {
-        toast.error('Failed to send message. Please try again or contact us via WhatsApp.');
+        toast.error(
+          `Failed to send message. Please try again or contact us ${getAltChannelSuffix()}`
+        );
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error('Failed to send message. Please try again or contact us via WhatsApp.');
+      toast.error(
+        `Failed to send message. Please try again or contact us ${getAltChannelSuffix()}`
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -218,37 +237,66 @@ export default function ContactPage() {
             </Card>
           </motion.div>
 
-          {/* WhatsApp and Map */}
+          {/* WhatsApp / Instagram and Map */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
             className="space-y-6">
             {/* WhatsApp Card */}
-            <Card className="p-8 rounded-2xl border-0 bg-gradient-to-br from-green-50 to-emerald-50">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
-                  <MessageCircle className="w-6 h-6 text-white" />
+            {isWhatsappAvailable && (
+              <Card className="p-8 rounded-2xl border-0 bg-gradient-to-br from-green-50 to-emerald-50">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
+                    <MessageCircle className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-playfair text-2xl font-bold text-gray-900">Quick Response?</h3>
+                    <p className="text-gray-600">Chat with us on WhatsApp</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-playfair text-2xl font-bold text-gray-900">Quick Response?</h3>
-                  <p className="text-gray-600">Chat with us on WhatsApp</p>
+                <p className="text-gray-700 mb-6">
+                  Get instant responses to your queries. We're available to help you with orders, customizations, and more!
+                </p>
+                <a
+                  href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button className="w-full bg-green-500 hover:bg-green-600 text-white py-6 text-lg rounded-full">
+                    <MessageCircle className="mr-2 w-5 h-5" />
+                    Chat on WhatsApp
+                  </Button>
+                </a>
+              </Card>
+            )}
+
+            {isInstagramAvailable && (
+              <Card className="p-8 rounded-2xl border-0 bg-gradient-to-br from-pink-50 to-fuchsia-50">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-400 rounded-xl flex items-center justify-center">
+                    <Instagram className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-playfair text-2xl font-bold text-gray-900">Prefer Instagram?</h3>
+                    <p className="text-gray-600">Send us a DM on Instagram</p>
+                  </div>
                 </div>
-              </div>
-              <p className="text-gray-700 mb-6">
-                Get instant responses to your queries. We're available to help you with orders, customizations, and more!
-              </p>
-              <a
-                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button className="w-full bg-green-500 hover:bg-green-600 text-white py-6 text-lg rounded-full">
-                  <MessageCircle className="mr-2 w-5 h-5" />
-                  Chat on WhatsApp
-                </Button>
-              </a>
-            </Card>
+                <p className="text-gray-700 mb-6">
+                  Share your ideas, references, and inspiration directly over Instagram DMs.
+                </p>
+                <a
+                  href={process.env.NEXT_PUBLIC_INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button className="w-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-400 hover:opacity-90 text-white py-6 text-lg rounded-full">
+                    <Instagram className="mr-2 w-5 h-5" />
+                    Message on Instagram
+                  </Button>
+                </a>
+              </Card>
+            )}
 
             {/* Google Maps */}
             <Card className="rounded-2xl border-0 overflow-hidden shadow-lg">

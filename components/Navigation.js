@@ -11,6 +11,14 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
+  const isWhatsappAvailable =
+    process.env.NEXT_PUBLIC_WHATSAPP_AVAILABLE === 'true' &&
+    !!process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+
+  const isInstagramAvailable =
+    process.env.NEXT_PUBLIC_INSTAGRAM_AVAILABLE === 'true' &&
+    !!process.env.NEXT_PUBLIC_INSTAGRAM_URL;
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -34,9 +42,14 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-rose-400 to-pink-500 rounded-xl flex items-center justify-center">
-              <Heart className="w-6 h-6 text-white fill-white" />
+            <div className="w-14 h-14 bg-gradient-to-br from-rose-400 to-pink-500 rounded-xl flex items-center justify-center overflow-hidden">
+              <img
+                className="w-full h-full object-cover rounded-lg"
+                src="https://res.cloudinary.com/dwidsjfvx/image/upload/v1764769231/WhatsApp_Image_2025-12-03_at_13.30.56_ytozce.jpg"
+                alt="logo"
+              />
             </div>
+
             <span className="font-playfair text-2xl font-bold text-gray-900">
               {process.env.NEXT_PUBLIC_BUSINESS_NAME || 'Blooms & Gifts'}
             </span>
@@ -57,16 +70,22 @@ export default function Navigation() {
                 {link.label}
               </Link>
             ))}
-            <a
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button className="bg-rose-500 hover:bg-rose-600 text-white rounded-full">
-                <ShoppingBag className="w-4 h-4 mr-2" />
-                Order Now
-              </Button>
-            </a>
+            {(isWhatsappAvailable || isInstagramAvailable) && (
+              <a
+                href={
+                  isWhatsappAvailable
+                    ? `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '')}`
+                    : process.env.NEXT_PUBLIC_INSTAGRAM_URL
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button className="bg-rose-500 hover:bg-rose-600 text-white rounded-full">
+                  <ShoppingBag className="w-4 h-4 mr-2" />
+                  Order Now
+                </Button>
+              </a>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -100,17 +119,23 @@ export default function Navigation() {
                   {link.label}
                 </Link>
               ))}
-              <a
-                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsOpen(false)}
-              >
-                <Button className="w-full bg-rose-500 hover:bg-rose-600 text-white rounded-full">
-                  <ShoppingBag className="w-4 h-4 mr-2" />
-                  Order Now
-                </Button>
-              </a>
+              {(isWhatsappAvailable || isInstagramAvailable) && (
+                <a
+                  href={
+                    isWhatsappAvailable
+                      ? `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '')}`
+                      : process.env.NEXT_PUBLIC_INSTAGRAM_URL
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Button className="w-full bg-rose-500 hover:bg-rose-600 text-white rounded-full">
+                    <ShoppingBag className="w-4 h-4 mr-2" />
+                    Order Now
+                  </Button>
+                </a>
+              )}
             </div>
           </div>
         )}

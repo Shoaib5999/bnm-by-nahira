@@ -6,6 +6,10 @@ import { Heart, Instagram, Facebook, Mail, Phone, MapPin } from 'lucide-react';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const isInstagramAvailable =
+    process.env.NEXT_PUBLIC_INSTAGRAM_AVAILABLE === 'true' &&
+    !!process.env.NEXT_PUBLIC_INSTAGRAM_URL;
+
   return (
     <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white">
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -13,9 +17,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-rose-400 to-pink-500 rounded-xl flex items-center justify-center">
-                <Heart className="w-6 h-6 text-white fill-white" />
-              </div>
+            <div className="w-14 h-14 bg-gradient-to-br from-rose-400 to-pink-500 rounded-xl flex items-center justify-center overflow-hidden">
+              <img
+                className="w-full h-full object-cover rounded-lg"
+                src="https://res.cloudinary.com/dwidsjfvx/image/upload/v1764769231/WhatsApp_Image_2025-12-03_at_13.30.56_ytozce.jpg"
+                alt="logo"
+              />
+            </div>
               <span className="font-playfair text-2xl font-bold">
                 {process.env.NEXT_PUBLIC_BUSINESS_NAME || 'Blooms & Gifts'}
               </span>
@@ -24,7 +32,7 @@ export default function Footer() {
               {process.env.NEXT_PUBLIC_BUSINESS_TAGLINE || 'Handcrafted Bouquets & Personalized Gifts'}
             </p>
             <div className="flex space-x-4">
-              {process.env.NEXT_PUBLIC_INSTAGRAM_URL && (
+              {isInstagramAvailable && (
                 <a
                   href={process.env.NEXT_PUBLIC_INSTAGRAM_URL}
                   target="_blank"
