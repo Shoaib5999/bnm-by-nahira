@@ -87,11 +87,11 @@ export default function Home() {
   {/* Centered content */}
   <div className="absolute inset-0 flex items-center justify-center">
     <div className="text-center">
-      <h1 className="text-3xl md:text-5xl font-bold">
+      <h1 className="text-3xl md:text-5xl font-bold text-red-500">
         SCAM!, CHOR! 
       </h1>
 
-      <p className="mt-2 text-base md:text-lg">
+      <p className="mt-2 text-base md:text-lg text-red-500">
         This is a scam website made for scamming others
       </p>
     </div>
