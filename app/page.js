@@ -65,26 +65,39 @@ export default function Home() {
         {/* Hero Section */}
         <section className="relative w-full mt-5  md:h-[110vh] overflow-hidden bg-[#f5c9d9] h-[90vh]">
 {/* Background Image */}
-<div className="absolute inset-0 md:h-[70vh] md:top-[15%] h-[90vh] mt-5">
-<Image
-  src="https://res.cloudinary.com/dei1kplrb/image/upload/v1764773909/file_00000000e8f47206a2c452c18c4b1198_pltl29.png"
-  alt="Bare Minimum by Nahira"
-  fill
-  priority
-  className="
-      /* DESKTOP */
-    object-contain
-    !scale-[1.5]
-    lg:scale-1
-    !left-8 lg:!top-5
-     lg:object-contain
-    lg:!left-10 
-    lg:!h-full lg:!w-full lg:text-inherit
-  "
-/>
 
-{/* <div className="absolute inset-0 bg-pink-200/20" /> */}
+<div className="absolute inset-0 md:h-[70vh] md:top-[15%] h-[90vh] mt-5">
+  <Image
+    src="https://res.cloudinary.com/dei1kplrb/image/upload/v1764773909/file_00000000e8f47206a2c452c18c4b1198_pltl29.png"
+    alt="Bare Minimum by Nahira"
+    fill
+    priority
+    className="
+      object-contain
+      !scale-[1.5]
+      lg:scale-1
+      !left-8
+      lg:!top-5
+      lg:!left-10
+      lg:!h-full
+      lg:!w-full
+    "
+  />
+
+  {/* Centered content */}
+  <div className="absolute inset-0 flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="text-3xl md:text-5xl font-bold">
+        SCAM!, CHOR! 
+      </h1>
+
+      <p className="mt-2 text-base md:text-lg">
+        This is a scam website made for scamming others
+      </p>
+    </div>
+  </div>
 </div>
+
 {/* <div className="absolute inset-x-0 top-[100%] md:top-[100%] bottom-0 lg:top-40 z-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/collections">
                 <Button size="lg" className="bg-rose-500 hover:bg-rose-600 text-white px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all">
